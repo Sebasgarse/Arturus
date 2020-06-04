@@ -56,7 +56,7 @@ class main:
         config_file = open(self.CONFIG_FILE_NAME)
         config_file_data = config_file.read()
         self.user.from_json(config_file_data)
-        self.print.slowly(text().safe_data)
+        self.print.slowly_success(text().safe_data, 1)
 
 
 if __name__ == '__main__':

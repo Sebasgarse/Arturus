@@ -19,4 +19,10 @@ class printer:
             print(char, end='', flush=True)
             time.sleep(speed * 0.1)
         print('')
+
+    def slowly_success(self, text: str, speed: int = 3):
+        for char in text:
+            print(f'{self.START}{self.GREEN}m{char}{self.END}', end='', flush=True)
+            time.sleep(speed * 0.1)
+        print('')
             
