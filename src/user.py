@@ -2,10 +2,11 @@ import json
 from src.public.singleton import SingletonType
 
 class user(metaclass=SingletonType):
-    name = ''
-    age = ''
-    intro = ''
-    number_of_entries = 0
+    def __init__(self):
+        self.name = ''
+        self.age = ''
+        self.intro = ''
+        self.number_of_entries = 0
 
     def to_json(self):
         json_form = {

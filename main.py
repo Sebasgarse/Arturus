@@ -1,6 +1,7 @@
 from src.printer import printer
 from src.localization import localization as text
 from src.user import user
+from src.ui.main_window import main_window
 import os
 
 class main:
@@ -15,9 +16,9 @@ class main:
 
     def _printStart(self):
         self.print.space()
-        self.print.success('============================================================')
-        self.print.success(f'            {text().start}                 ')
-        self.print.success('============================================================')
+        self.print.success('=' * 80)
+        self.print.success(str(text().start).center(80))
+        self.print.success('=' * 80)
         self.print.space()
 
     def _verify_profile_files(self):
