@@ -1,10 +1,12 @@
 from src.printer import printer
 from src.localization import localization as text
 from src.user import user
-from src.ui.main_window import main_window
-import os
+from src.ui import MainWindow
+from PyQt5.QtWidgets import QApplication
+import os, sys
 
 class main:
+    TEXT_WIDTH = 80
     CONFIG_FILE_NAME = 'conf.ini'
     print = None
     user = user()
@@ -13,12 +15,16 @@ class main:
         self.print = printer()
         self._printStart()
         self._verify_profile_files()
+        self.app = QApplication(sys.argv)
+        self.window = MainWindow()
 
     def _printStart(self):
         self.print.space()
-        self.print.success('=' * 80)
-        self.print.success(str(text().start).center(80))
-        self.print.success('=' * 80)
+        self.print.success('=' * self.TEXT_WIDTH)
+        self.print.success(
+            str(text().init).center(self.TEXT_WIDTH)
+        )
+        self.print.success('=' * self.TEXT_WIDTH)
         self.print.space()
 
     def _verify_profile_files(self):
@@ -57,8 +63,9 @@ class main:
         config_file = open(self.CONFIG_FILE_NAME)
         config_file_data = config_file.read()
         self.user.from_json(config_file_data)
-        self.print.slowly_success(text().safe_data, 1)
+        self.print.slowly_success(text().safe_data)
 
 
 if __name__ == '__main__':
     app = main()
+    sys.exit(app.app.exec_())

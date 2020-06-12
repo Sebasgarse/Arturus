@@ -14,13 +14,13 @@ class printer:
     def error(self, text: str):
         print(f'{self.START}{self.RED}m{text}{self.END}')
 
-    def slowly(self, text: str, speed: int = 3):
+    def slowly(self, text: str, speed: int = 1):
         for char in text:
             print(char, end='', flush=True)
             time.sleep(speed * 0.1)
         print('')
 
-    def slowly_success(self, text: str, speed: int = 3):
+    def slowly_success(self, text: str, speed: int = 1):
         for char in text:
             print(f'{self.START}{self.GREEN}m{char}{self.END}', end='', flush=True)
             time.sleep(speed * 0.1)

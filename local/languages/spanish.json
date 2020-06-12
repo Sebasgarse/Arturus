@@ -1,9 +1,11 @@
 {
-    "start": "Inicializando Proyecto Arturus ",
+    "project_name": "Arthurus",
+    "init": "Inicializando Proyecto Arturus ",
     "safe_data": "Datos asegurados",
     "error": "Error: ",
     "name": "Nombre: ",
     "age": "Edad: ",
     "age_error": " Edad tiene que ser un numero ",
-    "welcome": "Bienvenido señor "
+    "welcome": "Bienvenido señor ",
+    "start": "Iniciar"
 }
