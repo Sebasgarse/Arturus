@@ -29,15 +29,25 @@ class MainWindow(QWidget):
 
     def _create_hexagon_widget(self):
         self.hexagon_widget = HexagonWidget(self)
-        self.hexagon_widget.move(100,200)
-        self.hexagon_widget.resize(500, 300)
+        self.hexagon_widget.move(0,20)
+        self.hexagon_widget.resize(640, 460)
 
     def start_hexagon_animation(self):
-        x = 60 * (len(self.hexagon_widget.hexagons) + 1)
-        y = 70
-        self.hexagon_widget.add_hexagon(x, y, 60)
+        self._hexagon_circle()
+        
         if (not self.hexagon_widget.isAnimating()):
             self.hexagon_widget.start_animation()
+
+    def _hexagon_circle(self):
+        import math
+        center_x = 320
+        center_y = 230
+        radius = 60 * 2
+        self.hexagon_widget.add_hexagon(center_x, center_y, 60)
+        for pos in range(6):
+            x = radius * math.cos(math.pi/3 * pos) + center_x
+            y = radius * math.sin(math.pi/3 * pos) + center_y
+            self.hexagon_widget.add_hexagon(x, y, 60)
 
     def set_background_color(self, red: int, green: int, blue: int, alpha: int):
         self.setAutoFillBackground(True)
