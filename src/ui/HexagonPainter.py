@@ -10,13 +10,10 @@ class HexagonPainter(QPainter):
         super().begin(QPaintDevice)
         self.setRenderHint(QPainter.Antialiasing)
 
-    def drawHexagon(self, hexa: Hexagon, **kwds):
+    def drawHexagon(self, hexagon: Hexagon, **kwds):
         pen = QPen()
-        pen.setWidth(10)
+        pen.setWidth(hexagon.line_width)
         pen.setJoinStyle(Qt.MiterJoin)
-        if ('color' in kwds.keys()):
-            pen.setColor(QColor(*kwds['color']))
-        else:
-            pen.setColor(QColor(*hexa.color))
+        pen.setColor(QColor(*hexagon.color))
         self.setPen(pen)
-        self.drawPolygon(hexa)
+        self.drawPolygon(hexagon)

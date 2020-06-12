@@ -3,41 +3,54 @@ import threading
 class HexagonAnimator:
     def __init__(self, parent):
         self.parent = parent
+        self.animation = None
+        self.colors = {
+            'blue': [76, 132, 193],
+            'red': [193, 76, 132]
+        }
+
+    def isRunning(self):
+        if (self.animation):
+            return True
+        return False
 
     def start_animation(self):
-        self.anim_value = 0
-        self.anim_objective = [193, 76, 132]
-        self.anim = self._set_interval(self._animation, 0.1)
+        self.animated_hexagons = {}
+        self.animation = self._set_interval(self._animation, 0.1)
 
     def _set_interval(self, fn, time):
         def func_wrapper():
             self._set_interval(fn, time)
             fn()
-        t = threading.Timer(time, func_wrapper)
-        t.start()
-        return t
+        thread = threading.Timer(time, func_wrapper)
+        thread.start()
+        return thread
 
     def _animation(self):
-        if (self.anim_value == 20):
-            self.set_animation_color()
-            self.anim_value = 0
-        for hexa in self.parent.hexagons:
-            hexa.color = self.vector3_interpolation_10(*hexa.color, *self.anim_objective)
+        for hexagon in self.parent.hexagons:
+            if (hexagon.id not in self.animated_hexagons.keys()):
+                self.animated_hexagons[hexagon.id] = ['red', 0]
+            hexagon.color = self._change_hex_color(hexagon)
         self.parent.update()
 
-    def set_animation_color(self):
-        if (self.anim_objective == [193, 76, 132]):
-            self.anim_objective = [76, 132, 193]
-        else:
-            self.anim_objective = [193, 76, 132]
+    def _change_hex_color(self, hexagon):
 
-    def vector3_interpolation_10(self, x1, y1, z1, x2, y2, z2):
-        def vector_interpolation(x, y):
-            o = (y - x) / (20 - self.anim_value)
+        def interpolation(x, y):
+            o = 0
+            if (number_of_frames <= 19):
+                o = (y - x) / (20 - number_of_frames)
             return x + o
-        vector3 = []
-        vector3.append(vector_interpolation(x1, x2))
-        vector3.append(vector_interpolation(y1, y2))
-        vector3.append(vector_interpolation(z1, z2))
-        self.anim_value += 1
-        return vector3
+
+        if (hexagon.color == self.colors[self.animated_hexagons[hexagon.id][0]]):
+            self.animated_hexagons[hexagon.id][0] = [n for n in self.colors.keys() if n != self.animated_hexagons[hexagon.id][0]][0]
+            self.animated_hexagons[hexagon.id][1] = 0
+        objective_color = self.animated_hexagons[hexagon.id][0]
+        number_of_frames = self.animated_hexagons[hexagon.id][1]
+        objective_color_rgb = self.colors[objective_color]
+        rgb = [
+            interpolation(hexagon.color[0], objective_color_rgb[0]),
+            interpolation(hexagon.color[1], objective_color_rgb[1]),
+            interpolation(hexagon.color[2], objective_color_rgb[2])
+        ]
+        self.animated_hexagons[hexagon.id][1] += 1
+        return rgb

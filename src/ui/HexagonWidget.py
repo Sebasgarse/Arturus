@@ -23,4 +23,7 @@ class HexagonWidget(QWidget):
 
     def start_animation(self):
         self._hexagon_animator.start_animation()
+
+    def isAnimating(self):
+        return self._hexagon_animator.isRunning()
         
