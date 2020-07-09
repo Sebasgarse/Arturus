@@ -9,6 +9,7 @@ class HexagonWidget(QWidget):
         self.hexagons = []
         self._hexagon_animator = HexagonAnimator(self)
         self.selected_hexagon = None
+        self._axis_center = None
         
     def paintEvent(self, event):
         painter = HexagonPainter()
@@ -17,10 +18,15 @@ class HexagonWidget(QWidget):
             painter.drawHexagon(hexagon)
         painter.end()
 
-    def add_hexagon(self, x:int, y:int, radius:int):
+    def set_axis_center(self, x, y):
+        self._axis_center = [x, y]
+
+    def add_hexagon(self, x:int, y:int, z:int, radius:int):
+        if not self._axis_center:
+            return
         if ([x, y] in [[n.x, n.y] for n in self.hexagons]):
             return 
-        hexa = Hexagon(x,  y, radius)
+        hexa = Hexagon(self._axis_center, x, y, z, radius)
         self.hexagons.append(hexa)
         self.update()
 
