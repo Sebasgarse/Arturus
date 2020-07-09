@@ -6,9 +6,9 @@ class Hexagon(QPolygon):
     def __init__(self, center, x: int, y: int, z: int, radius: int):
         self.id = self.number_of_iterations
         self.local_center = center
-        self.local_x = x
-        self.local_y = y
-        self.local_z = z
+        self.x = x
+        self.y = y
+        self.z = z
         self.radius = radius
         self._initialize_geometry()
         self._color = [76, 132, 193]
@@ -17,9 +17,8 @@ class Hexagon(QPolygon):
         self.__class__.number_of_iterations += 1
 
     def _initialize_geometry(self):
-        print(self.local_y)
-        self.x = self.local_center[0] + (self.local_x * self.get_width()/2) - (self.local_y * self.get_width()/2)
-        self.y = self.local_center[1] + (self.local_z * self.get_height() * 3/4)
+        self.local_x = self.local_center[0] + (self.x * self.get_width()/2) - (self.y * self.get_width()/2)
+        self.local_y = self.local_center[1] + (self.z * self.get_height() * 3/4)
 
     def get_width(self):
         return math.sqrt(3) * self.radius
@@ -50,8 +49,8 @@ class Hexagon(QPolygon):
         for pos in range(6):
             angle = 60 * pos - 30
             angle_rad = math.pi/180 * angle
-            x = self.radius * math.cos(angle_rad) + self.x
-            y = self.radius * math.sin(angle_rad) + self.y
+            x = self.radius * math.cos(angle_rad) + self.local_x
+            y = self.radius * math.sin(angle_rad) + self.local_y
             points.append(x)
             points.append(y)
         return points

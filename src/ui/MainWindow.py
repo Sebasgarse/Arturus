@@ -40,13 +40,18 @@ class MainWindow(QWidget):
         self.hexagon_widget.start_animation()
 
     def _hexagon_circle(self):
-        import math
         center_x = 320
         center_y = 240
-        radius = 60
+        radius = 50
         self.hexagon_widget.set_axis_center(center_x, center_y)
-        self.hexagon_widget.add_hexagon(0, 1, -1, radius)
-        self.hexagon_widget.add_hexagon(0, 0, 0, radius)
+        n = 5
+        for x in range(-n, n + 1):
+            for y in range(-n, n + 1):
+                for z in range(-n, n + 1):
+                    if x + y + z == 0:
+                        self.hexagon_widget.add_hexagon(x, y, z, radius)
+
+        
 
     def set_background_color(self, red: int, green: int, blue: int, alpha: int = 255):
         self.setAutoFillBackground(True)
