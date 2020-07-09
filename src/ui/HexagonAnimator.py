@@ -55,8 +55,8 @@ class HexagonAnimator:
         return rgb
 
     def _verify_finish(self, hexagon):
+        objective_color = self.animated_hexagons[hexagon.id]['objective']
         if (hexagon.get_color() == self.colors[objective_color]):
-            objective_color = self.animated_hexagons[hexagon.id]['objective']
             next_objective_color = [n for n in self.colors.keys() if n != objective_color][0]
             self.animated_hexagons[hexagon.id]['objective'] = next_objective_color
             self.animated_hexagons[hexagon.id]['frame'] = 0
