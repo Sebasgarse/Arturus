@@ -16,6 +16,8 @@ class HexagonWidget(QWidget):
         painter.begin(self)
         for hexagon in self.hexagons:
             painter.drawHexagon(hexagon)
+        if self.selected_hexagon:
+            painter.drawHexagon(self.selected_hexagon)
         painter.end()
 
     def set_axis_center(self, x, y):
@@ -24,11 +26,15 @@ class HexagonWidget(QWidget):
     def add_hexagon(self, x:int, y:int, z:int, radius:int):
         if not self._axis_center:
             return
-        if ([x, y] in [[n.x, n.y] for n in self.hexagons]):
-            return 
+        if self._hexagon_already_exists(x, y, z):
+            return
         hexa = Hexagon(self._axis_center, x, y, z, radius)
         self.hexagons.append(hexa)
         self.update()
+
+    def _hexagon_already_exists(self, x: int, y: int, z: int):
+        if [x, y, z] in [[hexagon.x, hexagon.y, hexagon.z] for hexagon in self.hexagons]:
+            return true
 
     def select_hexagon(self, point):
         for hexagon in self.hexagons:
