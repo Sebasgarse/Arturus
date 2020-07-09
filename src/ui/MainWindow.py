@@ -15,10 +15,13 @@ class MainWindow(QWidget):
         self.show()
         self.start_hexagon_animation()
 
-    def mousePressEvent(self, event: QMouseEvent):
+    def mouseMoveEvent(self, event):
         x = event.x()
         y = event.y()
         self.hexagon_widget.select_hexagon(QPoint(x, y))
+
+    def mousePressEvent(self, event: QMouseEvent):
+        pass
 
     def _initialize_geometry(self):
         self.left = 10
@@ -50,8 +53,6 @@ class MainWindow(QWidget):
                 for z in range(-distance, distance + 1):
                     if x + y + z == 0:
                         self.hexagon_widget.add_hexagon(x, y, z, radius)
-
-        
 
     def set_background_color(self, red: int, green: int, blue: int, alpha: int = 255):
         self.setAutoFillBackground(True)

@@ -10,7 +10,8 @@ class HexagonWidget(QWidget):
         self._hexagon_animator = HexagonAnimator(self)
         self.selected_hexagon = None
         self._axis_center = None
-        
+        self.setMouseTracking(True)
+
     def paintEvent(self, event):
         painter = HexagonPainter()
         painter.begin(self)
