@@ -23,6 +23,12 @@ class HexagonWidget(QWidget):
         self.hexagons.append(hexa)
         self.update()
 
+    def get_hexagon(self, point):
+        for hexagon in self.hexagons:
+            if hexagon.containsPoint(point, 0):
+                hexagon.color = [13, 132, 77]
+                self.update()
+
     def start_animation(self):
         self._hexagon_animator.start_animation()
 

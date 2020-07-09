@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import QWidget, QPushButton, QLabel
-from PyQt5.QtGui import QPainter, QColor, QPolygon, QPainter, QPen
-from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QPainter, QColor, QPolygon, QPainter, QPen, QMouseEvent
+from PyQt5.QtCore import Qt, QPoint
 from .HexagonWidget import HexagonWidget
 from src.localization import localization as text
 
@@ -14,6 +14,11 @@ class MainWindow(QWidget):
         self._initialize_widgets()
         self.show()
         self.start_hexagon_animation()
+
+    def mousePressEvent(self, event: QMouseEvent):
+        x = event.x()
+        y = event.y()
+        self.hexagon_widget.get_hexagon(QPoint(x, y))
 
     def _initialize_geometry(self):
         self.left = 10
@@ -32,7 +37,7 @@ class MainWindow(QWidget):
 
     def start_hexagon_animation(self):
         self._hexagon_circle()
-        self.hexagon_widget.start_animation()
+        #self.hexagon_widget.start_animation()
 
     def _hexagon_circle(self):
         import math
