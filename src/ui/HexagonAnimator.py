@@ -30,8 +30,8 @@ class HexagonAnimator:
     def _animation(self):
         for hexagon in self.parent.hexagons:
             if (hexagon.id not in self.animated_hexagons.keys()):
-                self.animated_hexagons[hexagon.id] = ['red', 0]
-            hexagon.color = self._change_hex_color(hexagon)
+                self.animated_hexagons[hexagon.id] = {'objective':'red', 'step':0}
+            hexagon.set_color(*self._change_hex_color(hexagon))
         self.parent.update()
 
     def _change_hex_color(self, hexagon):
@@ -42,16 +42,21 @@ class HexagonAnimator:
                 o = (y - x) / (20 - number_of_frames)
             return x + o
 
-        if (hexagon.color == self.colors[self.animated_hexagons[hexagon.id][0]]):
-            self.animated_hexagons[hexagon.id][0] = [n for n in self.colors.keys() if n != self.animated_hexagons[hexagon.id][0]][0]
-            self.animated_hexagons[hexagon.id][1] = 0
-        objective_color = self.animated_hexagons[hexagon.id][0]
-        number_of_frames = self.animated_hexagons[hexagon.id][1]
+        self._verify_finish(hexagon)
+        objective_color = self.animated_hexagons[hexagon.id]['objective']
+        number_of_frames = self.animated_hexagons[hexagon.id]['step']
         objective_color_rgb = self.colors[objective_color]
         rgb = [
-            interpolation(hexagon.color[0], objective_color_rgb[0]),
-            interpolation(hexagon.color[1], objective_color_rgb[1]),
-            interpolation(hexagon.color[2], objective_color_rgb[2])
+            interpolation(hexagon.get_color_red(), objective_color_rgb[0]),
+            interpolation(hexagon.get_color_green(), objective_color_rgb[1]),
+            interpolation(hexagon.get_color_blue(), objective_color_rgb[2])
         ]
-        self.animated_hexagons[hexagon.id][1] += 1
+        self.animated_hexagons[hexagon.id]['step'] += 1
         return rgb
+
+    def _verify_finish(self, hexagon):
+        if (hexagon.get_color() == self.colors[objective_color]):
+            objective_color = self.animated_hexagons[hexagon.id]['objective']
+            next_objective_color = [n for n in self.colors.keys() if n != objective_color][0]
+            self.animated_hexagons[hexagon.id]['objective'] = next_objective_color
+            self.animated_hexagons[hexagon.id]['step'] = 0

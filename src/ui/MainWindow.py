@@ -18,7 +18,7 @@ class MainWindow(QWidget):
     def mousePressEvent(self, event: QMouseEvent):
         x = event.x()
         y = event.y()
-        self.hexagon_widget.get_hexagon(QPoint(x, y))
+        self.hexagon_widget.select_hexagon(QPoint(x, y))
 
     def _initialize_geometry(self):
         self.left = 10

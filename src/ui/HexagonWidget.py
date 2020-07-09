@@ -8,6 +8,7 @@ class HexagonWidget(QWidget):
         super().__init__(parent)
         self.hexagons = []
         self._hexagon_animator = HexagonAnimator(self)
+        self.selected_hexagon = None
         
     def paintEvent(self, event):
         painter = HexagonPainter()
@@ -23,10 +24,13 @@ class HexagonWidget(QWidget):
         self.hexagons.append(hexa)
         self.update()
 
-    def get_hexagon(self, point):
+    def select_hexagon(self, point):
         for hexagon in self.hexagons:
             if hexagon.containsPoint(point, 0):
-                hexagon.color = [13, 132, 77]
+                if self.selected_hexagon:
+                    self.selected_hexagon.set_default_color()
+                self.selected_hexagon = hexagon
+                hexagon.set_color(*[13, 132, 77]) 
                 self.update()
 
     def start_animation(self):

@@ -8,10 +8,28 @@ class Hexagon(QPolygon):
         self.x = x
         self.y = y
         self.radius = radius
-        self.color = [76, 132, 193]
+        self._color = [76, 132, 193]
         self.line_width = 10
         super().__init__(self.get_area_points())
         self.__class__.number_of_iterations += 1
+
+    def set_color(self, red:int, green:int, blue:int):
+        self._color = [red, green, blue]
+
+    def set_default_color(self):
+        self._color = [76, 132, 193]
+
+    def get_color(self):
+        return self._color
+
+    def get_color_red(self):
+        return self._color[0]
+
+    def get_color_green(self):
+        return self._color[1]
+
+    def get_color_blue(self):
+        return self._color[2]
 
     def get_area_points(self):
         points = []
