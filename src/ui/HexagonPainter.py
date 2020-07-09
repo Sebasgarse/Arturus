@@ -13,7 +13,7 @@ class HexagonPainter(QPainter):
     def drawHexagon(self, hexagon: Hexagon, **kwds):
         pen = QPen()
         pen.setWidth(hexagon.line_width)
-        pen.setJoinStyle(Qt.MiterJoin)
         pen.setColor(QColor(*hexagon.color))
+        pen.setJoinStyle(Qt.MiterJoin)
         self.setPen(pen)
         self.drawPolygon(hexagon)

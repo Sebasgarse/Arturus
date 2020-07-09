@@ -3,10 +3,10 @@ import threading
 class HexagonAnimator:
     def __init__(self, parent):
         self.parent = parent
-        self.animation = None
+        self.animation: threading.Thread = None
         self.colors = {
             'blue': [76, 132, 193],
-            'red': [193, 76, 132]
+            'red': [255, 76, 132]
         }
 
     def isRunning(self):
@@ -23,6 +23,7 @@ class HexagonAnimator:
             self._set_interval(fn, time)
             fn()
         thread = threading.Timer(time, func_wrapper)
+        thread.setDaemon(True)
         thread.start()
         return thread
 

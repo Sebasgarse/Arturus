@@ -17,6 +17,8 @@ class HexagonWidget(QWidget):
         painter.end()
 
     def add_hexagon(self, x:int, y:int, radius:int):
+        if ([x, y] in [[n.x, n.y] for n in self.hexagons]):
+            return 
         hexa = Hexagon(x,  y, radius)
         self.hexagons.append(hexa)
         self.update()

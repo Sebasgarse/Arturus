@@ -13,6 +13,7 @@ class MainWindow(QWidget):
         self.setMouseTracking(True)
         self._initialize_widgets()
         self.show()
+        self.start_hexagon_animation()
 
     def _initialize_geometry(self):
         self.left = 10
@@ -23,34 +24,36 @@ class MainWindow(QWidget):
 
     def _initialize_widgets(self):
         self._create_hexagon_widget()
-        self.button = QPushButton(text().start, self)
-        self.button.move(0, 0)
-        self.button.clicked.connect(self.start_hexagon_animation)
 
     def _create_hexagon_widget(self):
         self.hexagon_widget = HexagonWidget(self)
-        self.hexagon_widget.move(0,20)
-        self.hexagon_widget.resize(640, 460)
+        self.hexagon_widget.move(0,0)
+        self.hexagon_widget.resize(640, 480)
 
     def start_hexagon_animation(self):
         self._hexagon_circle()
-        
-        if (not self.hexagon_widget.isAnimating()):
-            self.hexagon_widget.start_animation()
+        self.hexagon_widget.start_animation()
 
     def _hexagon_circle(self):
         import math
         center_x = 320
-        center_y = 230
-        radius = 60 * 2
-        self.hexagon_widget.add_hexagon(center_x, center_y, 60)
-        for pos in range(6):
-            x = radius * math.cos(math.pi/3 * pos) + center_x
-            y = radius * math.sin(math.pi/3 * pos) + center_y
-            self.hexagon_widget.add_hexagon(x, y, 60)
+        center_y = 240
+        radius = 60
+        self.hexagon_widget.add_hexagon(center_x, center_y, radius)
+        for group in range(1, 4):
+            for pos in range(6):
+                x = radius * group * 2 * math.cos(math.pi/6 * (pos*2 - 3)) + center_x
+                y = radius * group * 2 * math.sin(math.pi/6 * (pos*2 - 3)) + center_y
+                self.hexagon_widget.add_hexagon(x, y, radius)
+        centers = list(self.hexagon_widget.hexagons)
+        for center in centers:
+            for pos in range(6):
+                x = radius * 2 * math.cos(math.pi/6 * (pos*2 - 3)) + center.x
+                y = radius * 2 * math.sin(math.pi/6 * (pos*2 - 3)) + center.y
+                self.hexagon_widget.add_hexagon(x, y, radius)
 
-    def set_background_color(self, red: int, green: int, blue: int, alpha: int):
+    def set_background_color(self, red: int, green: int, blue: int, alpha: int = 255):
         self.setAutoFillBackground(True)
         palette = self.palette()
-        palette.setColor(self.backgroundRole(), QColor(red, green, blue, 255))
+        palette.setColor(self.backgroundRole(), QColor(red, green, blue, alpha))
         self.setPalette(palette)    
