@@ -47,7 +47,7 @@ class MainWindow(QWidget):
         center_y = 240
         radius = 50
         self.hexagon_widget.set_axis_center(center_x, center_y)
-        distance = 5
+        distance = 2
         for x in range(-distance, distance + 1):
             for y in range(-distance, distance + 1):
                 for z in range(-distance, distance + 1):

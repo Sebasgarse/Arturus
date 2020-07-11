@@ -1,6 +1,7 @@
 import threading
 
 class HexagonAnimator:
+    MAX_FRAMES = 20
     def __init__(self, parent):
         self.parent = parent
         self.animation: threading.Thread = None
@@ -38,8 +39,8 @@ class HexagonAnimator:
 
         def interpolation(x, y):
             o = 0
-            if (number_of_frames <= 19):
-                o = (y - x) / (20 - number_of_frames)
+            if (number_of_frames <= self.MAX_FRAMES - 1):
+                o = (y - x) / (self.MAX_FRAMES - number_of_frames)
             return x + o
 
         self._verify_finish(hexagon)
