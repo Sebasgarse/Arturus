@@ -18,10 +18,12 @@ class MainWindow(QWidget):
     def mouseMoveEvent(self, event):
         x = event.x()
         y = event.y()
-        self.hexagon_widget.select_hexagon(QPoint(x, y))
+        self.hexagon_widget.distance_hexagon(QPoint(x, y))
 
     def mousePressEvent(self, event: QMouseEvent):
-        pass
+        x = event.x()
+        y = event.y()
+        self.hexagon_widget.select_hexagon(QPoint(x, y))
 
     def _initialize_geometry(self):
         self.left = 10
@@ -40,14 +42,14 @@ class MainWindow(QWidget):
 
     def start_hexagon_animation(self):
         self._hexagon_circle()
-        self.hexagon_widget.start_animation()
+        #self.hexagon_widget.start_animation()
 
     def _hexagon_circle(self):
         center_x = 320
         center_y = 240
         radius = 50
         self.hexagon_widget.set_axis_center(center_x, center_y)
-        distance = 2
+        distance = 5
         for x in range(-distance, distance + 1):
             for y in range(-distance, distance + 1):
                 for z in range(-distance, distance + 1):

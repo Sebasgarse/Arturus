@@ -13,12 +13,16 @@ class Hexagon(QPolygon):
         self._initialize_geometry()
         self._color = [76, 132, 193]
         self.line_width = 10
+        self.priority = False
         super().__init__(self.get_area_points())
         self.__class__.number_of_iterations += 1
 
     def _initialize_geometry(self):
         self.local_x = self.local_center[0] + (self.x * self.get_width()/2) - (self.y * self.get_width()/2)
         self.local_y = self.local_center[1] + (self.z * self.get_height() * 3/4)
+
+    def get_axis_points(self):
+        return [self.x, self.y, self.z]
 
     def get_width(self):
         return math.sqrt(3) * self.radius
