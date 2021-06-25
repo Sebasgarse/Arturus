@@ -7,7 +7,7 @@ class HexagonAnimator:
         self.animation: threading.Thread = None
         self.colors = {
             'blue': [76, 132, 193],
-            'red': [255, 76, 132]
+            'red': [252, 70, 107]
         }
 
     def isRunning(self):

@@ -39,7 +39,7 @@ class HexagonWidget(QWidget):
 
     def _hexagon_already_exists(self, x: int, y: int, z: int):
         if [x, y, z] in [[hexagon.x, hexagon.y, hexagon.z] for hexagon in self.hexagons]:
-            return true
+            return True
 
     def select_hexagon(self, point):
         for hexagon in self.hexagons:

@@ -42,7 +42,7 @@ class MainWindow(QWidget):
 
     def start_hexagon_animation(self):
         self._hexagon_circle()
-        #self.hexagon_widget.start_animation()
+        self.hexagon_widget.start_animation()
 
     def _hexagon_circle(self):
         center_x = 320
